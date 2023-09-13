@@ -16,7 +16,7 @@ class ModType(Enum):
     def from_tags(cls, tags: list[dict]):
         for t in tags:
             name = t['name'].lower()
-            if 'verified' in name:
+            if 'verified' in name or 'audio' in name:
                 return ModType.verified
             if 'sandbox' in name:
                 return ModType.sandbox
