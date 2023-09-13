@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "drgmodmanager"
+version = "0.1.0"
+description = ""
+authors = ["DarkKronicle"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+drgmodmanager = "drgmodmanager.cli:cli"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+inquirerpy = "^0.3.4"
+typer = {extras = ["all"], version = "^0.9.0"}
+rich = "^13.5.2"
+roundtripini = {git = "https://gitlab.com/DarkKronicle/roundtripini.git"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
