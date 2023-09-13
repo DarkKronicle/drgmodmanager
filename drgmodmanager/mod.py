@@ -10,6 +10,7 @@ class ModType(Enum):
     sandbox = 0
     approved = 1
     verified = 2
+    unknown = 3
 
     @classmethod
     def from_tags(cls, tags: list[dict]):
@@ -21,6 +22,7 @@ class ModType(Enum):
                 return ModType.sandbox
             if 'approved' in name:
                 return ModType.approved
+        return ModType.unknown
 
     def color(self):
         if self == ModType.sandbox:
@@ -34,14 +36,18 @@ class ModType(Enum):
             return "∅"
         if self == ModType.verified:
             return "♥ "
-        return "○"
+        if self == ModType.approved:
+            return "○"
+        return "?"
 
     def __str__(self):
         if self == ModType.sandbox:
             return "Sandbox"
         if self == ModType.verified:
             return "Verified"
-        return "Approved"
+        if self == ModType.approved:
+            return "Approved"
+        return "Unknown"
 
 
 class ModManager:
