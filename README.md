@@ -31,6 +31,40 @@ pipx install git+https://github.com/DarkKronicle/drgmodmanager.git
 
 You should now have access to the command `drgmodmanager` in your terminal.
 
+## Alternative Installation (mainly for development)
+
+To install this for development (or maybe pipx isn't working), clone this repository. Ensure that [poetry](https://python-poetry.org/docs/#installation) is installed.
+
+In the cloned repository, run
+
+```
+poetry install
+```
+
+You should now be able to run
+
+```
+poetry run drgmodmanager --help
+```
+
+If you don't want to type `poetry run` each time you can use:
+
+```
+poetry shell
+
+drgmodmanager <command>
+drgmodmanager <command>
+drgmodmanager <command>
+
+exit
+```
+
+Or set up an alias that runs `poetry run --directory <MANAGER DIRECTORY> drgmodmanager` (running this command should work in any directory).
+
+### Development
+
+Using the above installation, live changes can be tested by using `poetry run python main.py --help`.
+
 # Usage
 
 `drgmodmanager --help`

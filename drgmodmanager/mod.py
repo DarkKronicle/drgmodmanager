@@ -16,12 +16,17 @@ class ModType(Enum):
     def from_tags(cls, tags: list[dict]):
         for t in tags:
             name = t['name'].lower()
-            if 'verified' in name or 'audio' in name:
+            if 'verified' in name:
                 return ModType.verified
             if 'sandbox' in name:
                 return ModType.sandbox
             if 'approved' in name:
                 return ModType.approved
+        for t in tags:
+            # Other things
+            name = t['name'].lower()
+            if 'audio' in name:
+                return ModType.verified
         return ModType.unknown
 
     def color(self):

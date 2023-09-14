@@ -73,12 +73,18 @@ def setup_config(config: Config, *, default_config=None, default_mod=None) -> No
     config['modio'] = str(modio_cache)
 
 
-def select_mods(manager: ModManager) -> inquirer:
-    approved = [Choice(m.mod_id, name=m.name, enabled=m.enabled)
+def select_mods(manager: ModManager, *, enabled_ids: list[int] = None) -> inquirer:
+    def enabled(mod):
+        if enabled_ids is None:
+            return mod.enabled
+        return mod.mod_id in enabled_ids
+
+
+    approved = [Choice(m.mod_id, name=m.name, enabled=enabled(m))
                 for m in sorted(manager.get_approved(), key=lambda x: x.name)]
-    verified = [Choice(m.mod_id, name=m.name, enabled=m.enabled)
+    verified = [Choice(m.mod_id, name=m.name, enabled=enabled(m))
                 for m in sorted(manager.get_verified(), key=lambda x: x.name)]
-    sandbox = [Choice(m.mod_id, name=m.name, enabled=m.enabled)
+    sandbox = [Choice(m.mod_id, name=m.name, enabled=enabled(m))
                for m in sorted(manager.get_sandbox(), key=lambda x: x.name)]
     choices = []
     if len(verified) > 0:

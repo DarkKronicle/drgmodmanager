@@ -47,6 +47,26 @@ def delete(profile: str):
     yes = confirm("Are you sure you want to delete the profile {0}? This cannot be undone.".format(profile)).execute()
     if not yes:
         return
+    del config.profiles[profile]
+    config.save()
+    print("Deleted!")
+
+@profile_typer.command()
+def edit(profile: str):
+    config = Config()
+    if not config.exists():
+        print("No config setup, try running drgmodmanager setup")
+        return
+    config.load()
+    if profile not in config.profiles.keys():
+        print("That profile doesn't exist!")
+        return
+    manager = mod.ModManager.from_config(config)
+    pro_obj = config.profiles[profile]
+    new_mods = select_mods(manager, enabled_ids=pro_obj.mods).execute()
+    pro_obj.mods = new_mods
+    config.save()
+    print("Updated!")
 
 @profile_typer.command()
 def load(profile: str):
@@ -63,4 +83,3 @@ def load(profile: str):
     manager.set_enabled_mods(profile_obj.mods)
     manager.save_to_ini(config['gameconfig'])
     print("Done!")
-
